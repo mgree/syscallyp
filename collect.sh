@@ -131,6 +131,12 @@ do
         report "$tag $arch build complete (in $headers)"
 
         # identify variants
+        if ! [ -e "$headers"/include/asm/unistd.h ]
+        then
+            report "$tag $arch aborted (could not find include/asm/unistd.h)"
+            continue
+        fi
+        
         grep -e '#if' "$headers"/include/asm/unistd.h >"$TAGDIR/$arch.variants"
         variants=""
         while read variant
